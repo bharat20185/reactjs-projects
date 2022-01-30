@@ -54,6 +54,9 @@ function App() {
 
   const handleRemove = (index) => {
     setItems(items.filter((item, itemIndex) => itemIndex !== index))
+    setText("");
+    setIsEdit(false);
+    setItemId(null);
     showAlert(true, 'danger', 'Item Removed!')
   }
 

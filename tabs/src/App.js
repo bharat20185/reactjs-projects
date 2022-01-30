@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Button, BottonGroup, ButtonGroup, ListGroup } from "react-bootstrap";
+import { Button, ButtonGroup, ListGroup } from "react-bootstrap";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
 const url = "https://course-api.com/react-tabs-project";
@@ -9,29 +9,29 @@ function App() {
 	const [loading, setLoading] = useState(true);
 	const [tabs, setTabs] = useState([]);
 	const [tabTitles, setTabTitles] = useState([]);
-	const [value, setValue] = useState(0);
+	const [tab, setTab] = useState(null);
 
 	useEffect(() => {
 		const fetchTabs = async () => {
 			const res = await axios.get(url);
-      const titles = res.data.map((tab) => tab.company);
+			const titles = res.data.map((tab) => tab.company);
 			setTabs(res.data);
 			setTabTitles(titles);
-      setLoading(false);
+			setLoading(false);
+			setTab(res.data[0])
 		};
 		fetchTabs();
 	}, []);
 
 	const handleButtonClick = (pos) => {
-		setValue(pos);
+		setTab(tabs[pos]);
 	};
 
 	if (loading) {
-    return <h2>Loading...</h2>
+		return <h2>Loading...</h2>;
 	}
 
-	const { title, company, dates, duties } = tabs[value];
-
+	console.log(tab);
 	return (
 		<div className="container mt-3">
 			{tabs.length > 0 && (
@@ -48,14 +48,23 @@ function App() {
 						))}
 					</ButtonGroup>
 					<hr />
-					<h2>{title}</h2>
-          <div className="badge bg-secondary rounded-2">{company}</div>
-          <p>{dates}</p>
-          <ListGroup>
-            {
-              duties.map(duty => <ListGroup.Item key={`duty${value}`}><FaAngleDoubleRight /> {duty}</ListGroup.Item>)
-            }
-          </ListGroup>
+					
+					{tab && (
+						<>
+							<h2>{tab.title}</h2>
+							<div className="badge bg-secondary rounded-2">
+								{tab.company}
+							</div>
+							<p>{tab.dates}</p>
+							<ListGroup>
+								{tab.duties.map((duty, index) => (
+									<ListGroup.Item key={`duty${index}`}>
+										<FaAngleDoubleRight /> {duty}
+									</ListGroup.Item>
+								))}
+							</ListGroup>
+						</>
+					)}
 				</>
 			)}
 		</div>
