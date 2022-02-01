@@ -1,13 +1,15 @@
 import React from 'react'
 import { FaBars } from 'react-icons/fa'
 import {useAppContext} from './context'
+import Modal from './Modal'
+import ModalContent from './ModalContent'
 
 const Home = () => {
   const {
     openSidebar,
     closeSidebar, 
     siderbarOpen,
-    openModal,
+    setModalOpen,
     closeModal,
     modalOpen
   } = useAppContext();
@@ -17,12 +19,15 @@ const Home = () => {
   }
 
   const handleModal = () => {
-    modalOpen ? closeModal() : openModal()
+    setModalOpen(!modalOpen)
   }
 
   return <main>
     <button onClick={handleBars} className="sidebar-toggle"><FaBars /></button>
     <button onClick={handleModal} className="btn">Show Modal</button>
+    <Modal open={modalOpen} onClose={closeModal}>
+      <ModalContent />
+    </Modal>
   </main>
 }
 

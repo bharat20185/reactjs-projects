@@ -1,1 +1,0 @@
-[Demo](https://beekay-siderbar-modal.netlify.app/)

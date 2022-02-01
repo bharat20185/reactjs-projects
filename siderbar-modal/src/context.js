@@ -31,7 +31,8 @@ export const AppProvider = (props) => {
 		openModal,
 		closeModal,
 		openSidebar,
-        closeSidebar
+        closeSidebar,
+		setModalOpen
 	};
 
 	return (
